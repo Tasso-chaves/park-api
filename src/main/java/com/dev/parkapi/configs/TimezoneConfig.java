@@ -1,4 +1,4 @@
-package com.dev.parkapi.config;
+package com.dev.parkapi.configs;
 
 import java.util.TimeZone;
 
