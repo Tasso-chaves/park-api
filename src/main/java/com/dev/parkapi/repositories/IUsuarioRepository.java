@@ -6,6 +6,6 @@ import org.springframework.stereotype.Repository;
 import com.dev.parkapi.entities.Usuario;
 
 @Repository
-public interface IUsuarioRepository  extends JpaRepository<Long, Usuario>{
+public interface IUsuarioRepository  extends JpaRepository<Usuario, Long>{
     
 }
