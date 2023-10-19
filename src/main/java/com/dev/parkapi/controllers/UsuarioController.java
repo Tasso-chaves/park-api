@@ -1,5 +1,7 @@
 package com.dev.parkapi.controllers;
 
+import java.util.List;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -32,7 +34,7 @@ public class UsuarioController {
     @GetMapping("/{id}")
     public ResponseEntity<Usuario> buscarPorId(@PathVariable Long id){
 
-       Usuario usuario = usuarioService.buscarPorId(id);
+       Usuario usuario = usuarioService.retornaPorId(id);
        return ResponseEntity.ok().body(usuario);
     }
 
@@ -41,5 +43,12 @@ public class UsuarioController {
 
        Usuario usuarioNovaSenha = usuarioService.editarSenha(id, usuario.getPassword());
        return ResponseEntity.ok().body(usuarioNovaSenha);
+    }
+
+    @GetMapping
+    public ResponseEntity<List<Usuario>> buscarTodos(){
+
+       List<Usuario> usuarios = usuarioService.retornaTodos();
+       return ResponseEntity.ok().body(usuarios);
     }
 }
