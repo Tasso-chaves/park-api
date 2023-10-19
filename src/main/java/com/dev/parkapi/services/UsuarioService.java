@@ -25,4 +25,12 @@ public class UsuarioService {
             () -> new RuntimeException("Usuário não encontrado!")
         );
     }
+
+    //Nesse caso, não utiliza o UPDATE/SAVE, o Hibernat entende o estado do Obj usuário, através do setPassword automaticamente identifica a mudança.
+    @Transactional
+    public Usuario editarSenha(Long id, String password) {
+        Usuario usuario = buscarPorId(id);
+        usuario.setPassword(password);
+        return usuario;
+    }
 }

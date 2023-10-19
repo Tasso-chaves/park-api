@@ -3,6 +3,7 @@ package com.dev.parkapi.controllers;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -33,5 +34,12 @@ public class UsuarioController {
 
        Usuario usuario = usuarioService.buscarPorId(id);
        return ResponseEntity.ok().body(usuario);
+    }
+
+    @PatchMapping("/{id}")
+    public ResponseEntity<Usuario> alteraSenha(@PathVariable Long id, @RequestBody Usuario usuario){
+
+       Usuario usuarioNovaSenha = usuarioService.editarSenha(id, usuario.getPassword());
+       return ResponseEntity.ok().body(usuarioNovaSenha);
     }
 }
