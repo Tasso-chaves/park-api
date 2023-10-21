@@ -12,6 +12,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.dev.parkapi.dto.UsuarioCreateDto;
+import com.dev.parkapi.dto.UsuarioResponseDto;
+import com.dev.parkapi.dto.mapper.UsuarioMapper;
 import com.dev.parkapi.entities.Usuario;
 import com.dev.parkapi.services.UsuarioService;
 
@@ -25,10 +28,10 @@ public class UsuarioController {
     private final UsuarioService usuarioService;
 
     @PostMapping
-    public ResponseEntity<Usuario> criar(@RequestBody Usuario usuario){
+    public ResponseEntity<UsuarioResponseDto> criar(@RequestBody UsuarioCreateDto usuarioCreateDto){
 
-       Usuario usuarioSalvo = usuarioService.salvar(usuario);
-       return ResponseEntity.status(HttpStatus.CREATED).body(usuarioSalvo);
+       Usuario usuarioSalvo = usuarioService.salvar(UsuarioMapper.toUsuario(usuarioCreateDto));
+       return ResponseEntity.status(HttpStatus.CREATED).body(UsuarioMapper.toDto(usuarioSalvo));
     }
 
     @GetMapping("/{id}")
