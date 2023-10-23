@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.dev.parkapi.dto.UsuarioCreateDto;
 import com.dev.parkapi.dto.UsuarioResponseDto;
+import com.dev.parkapi.dto.UsuarioSenhaDto;
 import com.dev.parkapi.dto.mapper.UsuarioMapper;
 import com.dev.parkapi.entities.Usuario;
 import com.dev.parkapi.services.UsuarioService;
@@ -35,17 +36,17 @@ public class UsuarioController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Usuario> buscarPorId(@PathVariable Long id){
+    public ResponseEntity<UsuarioResponseDto> buscarPorId(@PathVariable Long id){
 
        Usuario usuario = usuarioService.retornaPorId(id);
-       return ResponseEntity.ok().body(usuario);
+       return ResponseEntity.ok().body(UsuarioMapper.toDto(usuario));
     }
 
     @PatchMapping("/{id}")
-    public ResponseEntity<Usuario> alteraSenha(@PathVariable Long id, @RequestBody Usuario usuario){
+    public ResponseEntity<Void> alteraSenha(@PathVariable Long id, @RequestBody UsuarioSenhaDto dto){
 
-       Usuario usuarioNovaSenha = usuarioService.editarSenha(id, usuario.getPassword());
-       return ResponseEntity.ok().body(usuarioNovaSenha);
+       Usuario usuarioNovaSenha = usuarioService.editarSenha(id, dto.getSenhaAtual(), dto.getNovaSenha(), dto.getConfirmaSenha());
+       return ResponseEntity.noContent().build();
     }
 
     @GetMapping

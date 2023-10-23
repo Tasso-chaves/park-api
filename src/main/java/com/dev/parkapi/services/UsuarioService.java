@@ -30,9 +30,19 @@ public class UsuarioService {
 
     //Nesse caso, não utiliza o UPDATE/SAVE, o Hibernat entende o estado do Obj usuário, através do setPassword automaticamente identifica a mudança.
     @Transactional
-    public Usuario editarSenha(Long id, String password) {
+    public Usuario editarSenha(Long id, String senhaAtual, String novaSenha, String confirmaSenha) {
+        
+        if(!novaSenha.equals(confirmaSenha)){
+             throw new RuntimeException("Nova senha está diferente da confirmação de senha");
+        }
+
         Usuario usuario = retornaPorId(id);
-        usuario.setPassword(password);
+
+        //Garantir que é o usuario autenticado
+        if(!usuario.getPassword().equals(senhaAtual)){
+             throw new RuntimeException("Senhas não conferem");
+        }
+        usuario.setPassword(novaSenha);
         return usuario;
     }
 
