@@ -19,6 +19,7 @@ import com.dev.parkapi.dto.mapper.UsuarioMapper;
 import com.dev.parkapi.entities.Usuario;
 import com.dev.parkapi.services.UsuarioService;
 
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
@@ -29,7 +30,7 @@ public class UsuarioController {
     private final UsuarioService usuarioService;
 
     @PostMapping
-    public ResponseEntity<UsuarioResponseDto> criar(@RequestBody UsuarioCreateDto usuarioCreateDto){
+    public ResponseEntity<UsuarioResponseDto> criar(@Valid @RequestBody UsuarioCreateDto usuarioCreateDto){
 
        Usuario usuarioSalvo = usuarioService.salvar(UsuarioMapper.toUsuario(usuarioCreateDto));
        return ResponseEntity.status(HttpStatus.CREATED).body(UsuarioMapper.toDto(usuarioSalvo));
