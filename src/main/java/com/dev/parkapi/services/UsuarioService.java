@@ -2,10 +2,12 @@ package com.dev.parkapi.services;
 
 import java.util.List;
 
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.dev.parkapi.entities.Usuario;
+import com.dev.parkapi.exception.UsernameUniqueViolationException;
 import com.dev.parkapi.repositories.IUsuarioRepository;
 
 import lombok.RequiredArgsConstructor;
@@ -18,7 +20,12 @@ public class UsuarioService {
 
     @Transactional
     public Usuario salvar(Usuario usuario) {
-        return usuarioRepository.save(usuario);
+        try {
+            return usuarioRepository.save(usuario);
+        } catch (DataIntegrityViolationException ex) {
+            throw new UsernameUniqueViolationException(String.format("Username {%s} já cadastrado!", usuario.getUsername()));
+        }
+        
     }
 
     @Transactional(readOnly = true)
