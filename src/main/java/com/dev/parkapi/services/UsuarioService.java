@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.dev.parkapi.entities.Usuario;
+import com.dev.parkapi.exception.EntityUserNotFoundException;
 import com.dev.parkapi.exception.UsernameUniqueViolationException;
 import com.dev.parkapi.repositories.IUsuarioRepository;
 
@@ -31,7 +32,7 @@ public class UsuarioService {
     @Transactional(readOnly = true)
     public Usuario retornaPorId(Long id) {
         return usuarioRepository.findById(id).orElseThrow(
-            () -> new RuntimeException("Usuário não encontrado!")
+            () -> new EntityUserNotFoundException(String.format("Usuário id:{%s} não encontrado!", id))
         );
     }
 
