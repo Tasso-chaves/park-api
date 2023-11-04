@@ -8,6 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.dev.parkapi.entities.Usuario;
 import com.dev.parkapi.exception.EntityUserNotFoundException;
+import com.dev.parkapi.exception.PasswordInvalidException;
 import com.dev.parkapi.exception.UsernameUniqueViolationException;
 import com.dev.parkapi.repositories.IUsuarioRepository;
 
@@ -41,14 +42,14 @@ public class UsuarioService {
     public Usuario editarSenha(Long id, String senhaAtual, String novaSenha, String confirmaSenha) {
         
         if(!novaSenha.equals(confirmaSenha)){
-             throw new RuntimeException("Nova senha está diferente da confirmação de senha");
+             throw new PasswordInvalidException("Nova senha está diferente da confirmação de senha");
         }
 
         Usuario usuario = retornaPorId(id);
 
         //Garantir que é o usuario autenticado
         if(!usuario.getPassword().equals(senhaAtual)){
-             throw new RuntimeException("Senhas não conferem");
+             throw new PasswordInvalidException("Senhas não conferem");
         }
         usuario.setPassword(novaSenha);
         return usuario;
