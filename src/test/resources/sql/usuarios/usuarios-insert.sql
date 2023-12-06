@@ -5,7 +5,7 @@ CRIADO_POR varchar(255),
 DATA_CRIACAO date,
 DATA_MODIFICACAO date,
 MODIFICADO_POR varchar(255),
-PASSWORD varchar(255),
+PASSWORD varchar(10),
 ROLE varchar(255),
 USERNAME varchar(255) 
 
