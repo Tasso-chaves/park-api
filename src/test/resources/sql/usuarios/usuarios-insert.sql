@@ -7,7 +7,8 @@ DATA_MODIFICACAO date,
 MODIFICADO_POR varchar(255),
 PASSWORD varchar(10),
 ROLE varchar(255),
-USERNAME varchar(255) 
+USERNAME varchar(255),
+UNIQUE (USERNAME)
 
 );
 INSERT INTO USUARIOS (id, username, password, role) VALUES (100, 'xas@gmail.com', '123456', 'ROLE_ADMIN');
